@@ -1,4 +1,6 @@
-# Nuxt Minimal Starter
+# COPIA-Nuxt_Auth_GitHub
+
+## Nuxt Minimal Starter
 
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -116,7 +118,7 @@ npx drizzle-kit studio ->interficie de la base de datos
 como actualizar node 
 presentación: 01_vue_creacioProjecte
 
+"@nuxt/ui": "^3.0.2" Libreria para hacer componentes con otros componentes ya creados 
 
+[Nuxt UI documentation](https://ui.nuxt.com/docs/getting-started)
 
-
-# COPIA-Nuxt_Auth_GitHub
