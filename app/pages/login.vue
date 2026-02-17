@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
+const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
 const schema = z.object({
   email: z.string().email('Invalid email'),
@@ -22,7 +23,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
- <Ucard class="max-w-md m-auto mi-10"> 
+ <Ucard class="max-w-md m-auto my-10"> 
     <template>
         <h1 class="text-2xl text-center"> Log in</h1>
     </template>
@@ -35,11 +36,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             <UInput v-model="state.password" type="password" />
         </UFormField>
 
+        <!--Login normal-->
         <UButton type="submit">
         Submit
         </UButton>
   </UForm>
-    <UButton type="submit">
+    <UButton type="submit" class="mt-4" @click="openInPopup('/auth/github')">
         Log in with Github
     </UButton>
 </Ucard>

@@ -122,3 +122,5 @@ presentación: 01_vue_creacioProjecte
 
 [Nuxt UI documentation](https://ui.nuxt.com/docs/getting-started)
 
+[Nuxt UI components] (https://ui.nuxt.com/)
+
