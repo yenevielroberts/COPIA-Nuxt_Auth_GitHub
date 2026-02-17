@@ -20,6 +20,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'success' })
   console.log(event.data)
 }
+
+watch(loggedIn,()=>{
+  if(loggedIn.value) {
+    navigateTo('/admin')
+  }
+})
 </script>
 
 <template>
