@@ -1,6 +1,6 @@
 import {eq} from "drizzle-orm"
 import { registerUSer, throwIfUserExists } from "~~/server/utils/registerUtils";
-export default defineCachedEventHandler(async(event) =>{
+export default defineEventHandler(async(event) =>{
     //1 Accedo a los campos del formulario
    const {name, email, password}= await readBody(event)
 
@@ -11,13 +11,13 @@ export default defineCachedEventHandler(async(event) =>{
 
   await throwIfUserExists(email);
   const newUser = await registerUSer(name,email, password)
-  const {password:repassword, ...userWithOuthPassword} = newUser
+  const {password:repassword, ...userWithouthPassword} = newUser
 
   await setUserSession(event, {
-    user:userWithOuthPassword
+    user:userWithouthPassword
   })
 
-  return userWithOuthPassword
+  return userWithouthPassword
   
 })
 

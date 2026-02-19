@@ -1,4 +1,5 @@
 import {eq} from "drizzle-orm"
+import * as schema from '../db/schema'
 
 export async function throwIfUserExists(email:string,) {
     

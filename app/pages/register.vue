@@ -27,8 +27,20 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       method:'POST',
       body:event.data
     })
-  } catch (error) {
+
+    fetch()
     toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'error' })
+
+  } catch (error) {
+   
+    if(error instanceof FetchError){
+      //Error de fetch
+      toast.add({ title: 'Error', description: error.data.message, color: 'error' })
+    }else{
+      //Error no controlado
+      toast.add({ title: 'error', description: 'Error en la aplicación. Por favor contacte con el equipo técnico', color: 'error' })
+
+    }
   }
 }
 
@@ -45,8 +57,8 @@ watch(loggedIn,()=>{
         <h1 class="text-2xl text-center"> Registro</h1>
     </template>
      <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-        <UFormField label="nom" name="nom">
-            <UInput v-model="state.email" class="w-full" />
+        <UFormField label="nom" name="name">
+            <UInput v-model="state.name" class="w-full" />
         </UFormField>
        
         <UFormField label="Email" name="email">
