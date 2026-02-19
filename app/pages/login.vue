@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
+import {FetchError} from 'ofetch'
 const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
 const schema = z.object({

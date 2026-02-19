@@ -34,11 +34,9 @@ export default defineEventHandler(async (event) => {
 
   const { password: repassword, ...userWithouthPassword } = correctLogin
 
-  await setUserSession(event, {
-    user: userWithouthPassword
-  })
+  await setUserSession(event, {user: userWithouthPassword})
 
   return userWithouthPassword
-  await throwIfUserExists(email)
+
 
 });
