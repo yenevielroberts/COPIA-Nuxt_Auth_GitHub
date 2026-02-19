@@ -17,8 +17,27 @@ const state = reactive<Partial<Schema>>({
 
 const toast = useToast()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'success' })
-  console.log(event.data)
+
+  try {
+    await $fetch('/auth/login', {
+      method:'POST',
+      body:event.data
+    })
+
+    fetch()
+    toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'error' })
+
+  } catch (error) {
+   
+    if(error instanceof FetchError){
+      //Error de fetch
+      toast.add({ title: 'Error', description: error.data.message, color: 'error' })
+    }else{
+      //Error no controlado
+      toast.add({ title: 'error', description: 'Error en la aplicación. Por favor contacte con el equipo técnico', color: 'error' })
+
+    }
+  }
 }
 
 watch(loggedIn,()=>{
