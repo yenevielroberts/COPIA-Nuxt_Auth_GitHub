@@ -22,7 +22,7 @@ export async function registerUSer(name:string, email:string, password:string) {
     }).returning()
     const newUser=res.at(0)
     if (!newUser){
-        throw createError ({statusCode:500, statusMessage:"Error al regustrar el usuario"})
+        throw createError ({statusCode:500, statusMessage:"Error al registrar el usuario"})
     }
 
     return newUser
