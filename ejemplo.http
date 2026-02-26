@@ -7,8 +7,15 @@ GET http://localhost:3000/galaxias
 POST http://localhost:3000/galaxias
 
     {
-        "nombre": "Yeneviel",
-        "num_planetas": 10,
+        "nombre": "Irie",
+        "num_planetas": 7,
         "curiosidades": "Greeny and bluish",
         "tipo": "Friendly"
+    }
+
+### 
+DELETE http://localhost:3000/galaxia
+
+    {
+      "id":2
     }

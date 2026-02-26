@@ -30,9 +30,12 @@ export async function insertGalaxias(nombre:string, num_planetas:number, curiosi
 export async function deleteGalaxia(id:number) {
     
     const res= await useDb().delete(schema.galaxias).
-    where(eq(schema.galaxias.id,id)).returning({deletedId:schema.galaxias.id, nombre:schema.galaxias.nombre});
+    where(eq(schema.galaxias.id, id))
+    .returning({deletedId:schema.galaxias.id, nombre:schema.galaxias.nombre});
+
     const deletedGalaxia=res.at(0)
-      if (!deletedGalaxia){
+
+    if (!deletedGalaxia){
         throw createError ({statusCode:500, statusMessage:"Error al eliminar la galaxia"})
     }
     
