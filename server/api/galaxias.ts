@@ -41,3 +41,18 @@ export async function deleteGalaxia(id:number) {
     
     return deletedGalaxia
 }
+
+
+export async function updateGalaxia(galaxia:{nombre:string, num_planetas:number, curiosidades:string, tipo:string}, id:number,){
+
+    const res=await useDb().update(schema.galaxias).set({nombre:galaxia.nombre,num_planetas:galaxia.num_planetas,curiosidades:galaxia.curiosidades,tipo:galaxia.tipo}).where(eq(schema.galaxias.id, id)).returning();  
+
+    const updatedGalaxia=res.at(0)
+
+       if (!updatedGalaxia){
+        throw createError ({statusCode:500, statusMessage:"Error al actualizar la galaxia"})
+    }
+    
+    return updatedGalaxia
+    
+}

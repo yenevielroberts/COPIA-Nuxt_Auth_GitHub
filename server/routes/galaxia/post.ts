@@ -1,4 +1,4 @@
-import {insertGalaxias} from '../api/galaxias'
+import {insertGalaxias} from '../../api/galaxias'
 
 //Handler de la peticion POST
 export default defineEventHandler (async (event)=>{

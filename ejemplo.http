@@ -1,10 +1,10 @@
 ##
 
-GET http://localhost:3000/galaxias
+GET http://localhost:3000/galaxias/get
 
 ###
 
-POST http://localhost:3000/galaxias
+POST http://localhost:3000/galaxia/post
 
     {
         "nombre": "Irie",
@@ -14,8 +14,15 @@ POST http://localhost:3000/galaxias
     }
 
 ### 
-DELETE http://localhost:3000/galaxia
+DELETE http://localhost:3000/galaxia/2
+
+
+### 
+PUT http://localhost:3000/galaxia/1
 
     {
-      "id":2
+        "nombre": "Yeneviel",
+        "num_planetas": 7,
+        "curiosidades": "Greeny and bluish",
+        "tipo": "Friendly"
     }
