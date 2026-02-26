@@ -1,4 +1,3 @@
-import { float } from "drizzle-orm/mysql-core";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core"
 
 export const users = sqliteTable("users", {
@@ -11,10 +10,10 @@ export const users = sqliteTable("users", {
 
 export const galaxias=sqliteTable ("galaxias",{
   id: integer("id").primaryKey(),
-  nombre: text("name"),
+  nombre: text("nombre"),
   num_planetas:integer("num_planetas"),
   curiosidades: text("curiosidades"),
-  tipo: integer("tipo"),
+  tipo: text("tipo"),
 
 })
 

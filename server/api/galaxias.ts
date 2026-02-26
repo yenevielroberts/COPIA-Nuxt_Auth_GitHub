@@ -8,14 +8,13 @@ export async function getGalaxias( ){
 };
 
 
-export async function insertGalaxias(galaxia:Object) {
+export async function insertGalaxias(nombre:string, num_planetas:number, curiosidades:string, tipo:string) {
 
     const res= await useDb().insert(schema.galaxias).values({
-        nombre: galaxia.nombre,
-        num_planetas: galaxia.num_planetas,
-        curiosidades: galaxia.curiosidades,
-        tipo: galaxia.tipo
-          
+        nombre:nombre,
+        num_planetas:num_planetas,
+        curiosidades:curiosidades,
+        tipo:tipo
     }).returning()
     const newGalaxia=res.at(0)
 
@@ -25,3 +24,4 @@ export async function insertGalaxias(galaxia:Object) {
     
     return newGalaxia
 }
+

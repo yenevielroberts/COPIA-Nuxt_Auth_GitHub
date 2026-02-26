@@ -1,0 +1,16 @@
+##
+
+GET http://localhost:3000/galaxias
+
+###
+
+POST http://localhost:3000/galaxias
+
+Content-Type: application/json
+
+    {
+        "nombre": "Yeneviel",
+        "num_planetas": 10,
+        "curiosidades": "Greeny and bluish",
+        "tipo": "Friendly"
+    }
