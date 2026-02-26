@@ -5,7 +5,6 @@ import Inicio from './pages/Inicio.vue';
 </script>
 <template>
     <NavBar/>
-    <Inicio/>
     <NuxtPage/>
 </template>
 <style>
