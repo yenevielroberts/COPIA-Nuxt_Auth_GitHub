@@ -1,30 +1,24 @@
 <script setup lang="ts">
+// GET /planetas/listado/id (id de la galaxia)
 // Protege la ruta para usuarios autenticados.
 definePageMeta({ middleware: ['auth'] })
+const route = useRoute()
+const galaxia_id = route.params.id
 
-// Modelo base que llega desde la API de galaxias.
-type Galaxia = {
-    id: number
-    nombre: string | null
-    num_planetas: number | null
-    curiosidades: string | null
-    tipo: string | null
-}
+const volver = () => navigateTo("/admin");
 
 // Datos de sesión y endpoint protegido de admin.
 const { user } = useUserSession()
 
 // Consulta principal para pintar el dashboard.
-const { data: galaxias, pending, error, refresh } = useFetch('/api/galaxia/get', {
-    default: () => []
-})
+const { data: planetas, pending, error, refresh } = useFetch(`/api/planetas/galaxia/${galaxia_id}`)
 
 // KPIs del panel.
-const totalGalaxias = computed(() => galaxias.value?.length ?? 0)
+const totalplanetas = computed(() => planetas.value?.length ?? 0)
 
 
 // Muestra solo las últimas 5 entradas (de más reciente a más antigua).
-const ultimasGalaxias = computed(() => (galaxias.value ?? []))
+const listaPlanetas = computed(() => (planetas.value ?? []))
 </script>
 
 <template>
@@ -32,46 +26,45 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []))
     <main class="admin-home">
         <!-- Cabecera con descripción y acciones rápidas -->
         <section class="hero">
+            <h1>Los planetas de la galaxia:</h1>
             <div class="hero-actions">
-                <h1>Tus galaxias</h1>
+                
                 <UButton as-child>
-                    <NuxtLink to="/galaxia/NewGalaxia">Nueva galaxia</NuxtLink>
+                    <NuxtLink to="/planetas/NewPlaneta">Nuevo Planeta</NuxtLink>
                 </UButton>
             </div>
         </section>
         <!-- Tabla con últimas galaxias y estados de carga -->
         <UCard class="content-card">
             <div class="content-header">
-                <h2>Galaxias</h2>
-                <p>{{ totalGalaxias }}</p>
+                <h2>Planetas</h2>
+                <p v-if="!listaPlanetas.length">0</p>
+                <p v-else>{{ listaPlanetas.length }}</p>
                 <UButton color="neutral" variant="outline" size="sm" @click="refresh()">Actualizar</UButton>
             </div>
-
+            <button @click="volver" class="btn-back">← Volver al listado</button>
             <p v-if="pending" class="status">Cargando datos...</p>
-            <p v-else-if="error" class="status error">No se pudieron cargar las galaxias.</p>
-            <p v-else-if="!ultimasGalaxias.length" class="status">Aún no hay galaxias registradas.</p>
+            <p v-else-if="error" class="status error">No se pudieron cargar los planetas.</p>
+            <p v-else-if="!listaPlanetas.length" class="status">No hay planetas registrados en esta galaxia.</p>
 
             <div v-else class="table-wrap">
                 <table>
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Planetas</th>
+                            <th>habitabilidad</th>
+                            <th>Orbita en días</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="galaxia in ultimasGalaxias" :key="galaxia.id">
+                        <tr v-for="planeta in listaPlanetas" :key="planeta.id">
                             <td>
-                                <UButton @click="navigateTo(`/galaxia/detalle/${galaxia.id}`)">
-                                    {{ galaxia.nombre || 'Sin nombre' }}
+                                <UButton @click="navigateTo(``)">
+                                    {{ planeta.nombre }}
                                 </UButton>
                             </td>
-                            <td>{{ galaxia.tipo || 'Sin tipo' }}</td>
-                            <td>  
-                                <UButton @click=" navigateTo(`/planetas/listado/${galaxia.id}`)">
-                                    Ver planetas({{ galaxia.num_planetas ?? 0 }})
-                                </UButton></td>
+                            <td>{{ planeta.habitabilidad || 'Sin tipo' }}</td>
+                            <td>{{ planeta.orbita_dias ?? 0 }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -97,8 +90,6 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []))
     border: 1px solid rgba(124, 58, 237, 0.25);
     border-radius: 18px;
     padding: 1.25rem;
-    display: grid;
-    gap: 1rem;
 }
 
 

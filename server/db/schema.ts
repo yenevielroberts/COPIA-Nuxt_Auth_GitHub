@@ -25,6 +25,7 @@ export const planetas=sqliteTable ("planetas",{
   habitabilidad: text("habitabilidad"),
   orbita_dias: integer("orbita_dias"),
   galaxia_id: integer("galaxia_id").references(()=>galaxias.id),
+  count_planetas:integer()
 
 })
 

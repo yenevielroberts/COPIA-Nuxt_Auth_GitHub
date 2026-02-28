@@ -95,7 +95,11 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse(
                                 </UButton>
                             </td>
                             <td>{{ galaxia.tipo || 'Sin tipo' }}</td>
-                            <td>{{ galaxia.num_planetas ?? 0 }}</td>
+                            <td>
+                                <UButton @click=" navigateTo(`planetas/listado/${galaxia.id}`)">
+                                    Ver planetas({{ galaxia.num_planetas ?? 0 }})
+                                </UButton>  
+                            </td>
                         </tr>
                     </tbody>
                 </table>
