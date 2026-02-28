@@ -5,7 +5,7 @@ import * as schema from '../../db/schema'
 // Handler POST para crear una galaxia asociada a un usuario autenticado.
 export default defineEventHandler(async (event) => {
     // 1) Obtengo los datos enviados por el formulario.
-    const { nombre, num_planetas, curiosidades, tipo } = await readBody(event)
+    const { nombre, curiosidades, tipo } = await readBody(event)
 
     // 2) Obtengo la sesión y datos del usuario.
     const session = await getUserSession(event)
@@ -33,7 +33,6 @@ export default defineEventHandler(async (event) => {
     // 6) Creo galaxia y guardo la relación con el usuario en la tabla auxiliar.
     const newInsertGalaxia = await insertGalaxiasForUser(
         nombre,
-        Number(num_planetas),
         curiosidades,
         tipo,
         userId

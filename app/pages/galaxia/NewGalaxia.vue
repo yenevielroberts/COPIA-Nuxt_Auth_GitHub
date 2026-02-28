@@ -9,7 +9,6 @@ definePageMeta({ middleware: ['auth'] })
 
 const schema = z.object({
   nombre: z.string(),
-  num_planetas: z.number(),
   curiosidades: z.string(),
   tipo: z.string()
 
@@ -20,7 +19,6 @@ type Schema = z.output<typeof schema>
 
 const state = reactive<Partial<Schema>>({
   nombre: undefined,
-  num_planetas: undefined,
   curiosidades: undefined,
   tipo: undefined
 })
@@ -59,10 +57,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
        <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
         <UFormField label="Nombre" name="nombre">
             <UInput v-model="state.nombre" />
-        </UFormField>
-
-        <UFormField label="Número de planetas" name="num_planetas">
-            <UInput v-model="state.num_planetas" type="number"  />
         </UFormField>
 
          <UFormField label="Curisidades" name="num_planetas">

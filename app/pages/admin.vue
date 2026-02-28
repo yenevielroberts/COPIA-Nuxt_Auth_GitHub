@@ -9,7 +9,7 @@ definePageMeta({ middleware: ['auth'] })
 type Galaxia = {
     id: number
     nombre: string | null
-    num_planetas: number | null
+    num_planetas_count: number | null
     curiosidades: string | null
     tipo: string | null
 }
@@ -25,7 +25,7 @@ const { data: galaxias, pending, error, refresh } = useFetch('/api/galaxia/get',
 // KPIs del panel.
 const totalGalaxias = computed(() => galaxias.value?.length ?? 0)
 const totalPlanetas = computed(() =>
-    (galaxias.value ?? []).reduce((sum, g) => sum + (Number(g.num_planetas) || 0), 0)
+    (galaxias.value ?? []).reduce((sum, g) => sum + (Number(g.num_planetas_count) || 0), 0)
 )
 
 
@@ -97,7 +97,7 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse(
                             <td>{{ galaxia.tipo || 'Sin tipo' }}</td>
                             <td>
                                 <UButton @click=" navigateTo(`planetas/listado/${galaxia.id}`)">
-                                    Ver planetas({{ galaxia.num_planetas ?? 0 }})
+                                    Ver planetas({{ galaxia.num_planetas_count ?? 0 }})
                                 </UButton>  
                             </td>
                         </tr>

@@ -11,9 +11,9 @@ export const users = sqliteTable("users", {
 export const galaxias=sqliteTable ("galaxias",{
   id: integer("id").primaryKey(),
   nombre: text("nombre"),
-  num_planetas:integer("num_planetas"),
   curiosidades: text("curiosidades"),
   tipo: text("tipo"),
+  id_user: integer ("user_id").references(()=>users.id),
 
 })
 
@@ -25,12 +25,5 @@ export const planetas=sqliteTable ("planetas",{
   habitabilidad: text("habitabilidad"),
   orbita_dias: integer("orbita_dias"),
   galaxia_id: integer("galaxia_id").references(()=>galaxias.id),
-  count_planetas:integer()
-
 })
 
-export const planetas_users =sqliteTable ("planetas_users",{
-      id: integer("id").primaryKey(),
-      id_user: integer ("user_id").references(()=>users.id),
-      id_galaxias: integer ("id_galaxias").references(()=>galaxias.id),
-})

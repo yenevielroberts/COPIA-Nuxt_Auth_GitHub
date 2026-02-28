@@ -19,7 +19,6 @@ const {data:galaxia, pending, error, refresh}=useFetch<any>(`/api/galaxia/${id}`
 //Esquema de validación
 const schema = z.object({
   nombre: z.string().min(1, 'El nombre es obligatorio'),
-  num_planetas: z.number().min(0),
   curiosidades: z.string().optional(),
   tipo: z.string()
 
@@ -30,7 +29,6 @@ type Schema = z.output<typeof schema>
 //Estado inicial
 const state = reactive<Partial<Schema>>({
   nombre:'',
-  num_planetas: 0,
   curiosidades:'',
   tipo:''
 })
@@ -39,7 +37,6 @@ const state = reactive<Partial<Schema>>({
 watch(galaxia, (newVal)=>{
     if(newVal){
         state.nombre = newVal.nombre || ''
-        state.num_planetas = newVal.num_planetas || 0
         state.curiosidades = newVal.curiosidades || ''
         state.tipo = newVal.tipo || '' 
     }
@@ -79,10 +76,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
        <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
         <UFormField label="Nombre" name="nombre">
             <UInput v-model="state.nombre" />
-        </UFormField>
-
-        <UFormField label="Número de planetas" name="num_planetas">
-            <UInput v-model="state.num_planetas" type="number"  />
         </UFormField>
 
          <UFormField label="Curisidades" name="num_planetas">
