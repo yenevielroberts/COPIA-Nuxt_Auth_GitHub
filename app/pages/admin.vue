@@ -15,7 +15,7 @@ type Galaxia = {
 }
 
 // Datos de sesión y endpoint protegido de admin.
-const { user, clear } = useUserSession()
+const { user } = useUserSession()
 
 // Consulta principal para pintar el dashboard.
 const { data: galaxias, pending, error, refresh } = useFetch('/api/galaxia/get', {
@@ -25,7 +25,7 @@ const { data: galaxias, pending, error, refresh } = useFetch('/api/galaxia/get',
 // KPIs del panel.
 const totalGalaxias = computed(() => galaxias.value?.length ?? 0)
 const totalPlanetas = computed(() =>
-    (galaxias.value ?? []).reduce((sum, galaxia) => sum + (Number(galaxia.num_planetas) || 0), 0)
+    (galaxias.value ?? []).reduce((sum, g) => sum + (Number(g.num_planetas) || 0), 0)
 )
 
 
@@ -50,7 +50,7 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse(
                     <NuxtLink to="/galaxia/NewGalaxia">Nueva galaxia</NuxtLink>
                 </UButton>
                 <UButton color="neutral" variant="subtle" as-child>
-                    <NuxtLink to="/listado">Ver listado</NuxtLink>
+                    <NuxtLink to="/galaxia/listado">Ver listado</NuxtLink>
                 </UButton>
             </div>
         </section>
