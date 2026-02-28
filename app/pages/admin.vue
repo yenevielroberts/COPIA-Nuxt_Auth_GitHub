@@ -52,9 +52,6 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse(
                 <UButton color="neutral" variant="subtle" as-child>
                     <NuxtLink to="/listado">Ver listado</NuxtLink>
                 </UButton>
-                <UButton color="neutral" variant="ghost" @click="clear(); navigateTo('/login')">
-                    Cerrar sesión
-                </UButton>
             </div>
         </section>
 

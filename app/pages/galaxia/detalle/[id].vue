@@ -29,22 +29,48 @@ const volver = () => navigateTo("/admin");
 
 
 <template>
-    <div class="detalle-container">
-        <button @click="volver" class="btn-back">
-        ← Volver al listado
-      </button>
+    <section class="detalle-container">
         <p v-if="pending" class="status">Cargando datos...</p>
         <p v-else-if="error" class="status error">Error al cargar la galaxia.</p>
         <p v-else-if="!galaxia" class="status error">Galaxia no encontrada o no tienes acceso a ella.</p>
-        <div v-else class="galaxia-detalle">
-            <h1>{{ galaxia.nombre }}</h1>
-            <p><strong>Tipo:</strong> {{ galaxia.tipo || 'No especificado' }}</p>
-            <p><strong>Número de planetas:</strong> {{ galaxia.num_planetas || 0 }}</p>
-            <p><strong>Curiosidades:</strong> {{ galaxia.curiosidades || 'Sin información' }}</p>
+        <div  v-else>
+            <h1>Galaxia {{ galaxia.nombre }}</h1>
+            <button @click="volver" class="btn-back">← Volver al listado</button>
+            <div class="galaxia-detalle">
+                <p><strong>Tipo:</strong> {{ galaxia.tipo || 'No especificado' }}</p>
+                <p><strong>Número de planetas:</strong> {{ galaxia.num_planetas || 0 }}</p>
+                <p><strong>Curiosidades:</strong> {{ galaxia.curiosidades || 'Sin información' }}</p>
+            </div> 
+            <div class="container-action-btn">
+                <UButton>Actualizar</UButton>
+                <UButton>Eliminar</UButton>  
+            </div>
         </div>
-    </div>
+   
+    </section>
 </template>
 <style scoped>
+/* Botón de volver */
+.btn-back {
+    background: rgba(20, 25, 60, 0.55);
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    color: #a5b9f9;
+    padding: 0.65rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(12px);
+}
+
+.btn-back:hover {
+    background: rgba(124, 58, 237, 0.25);
+    border-color: #7c3aed;
+    transform: translateX(-4px);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+}
+
 .detalle-container {
     max-width: 800px;
     margin: 2rem auto;
@@ -53,25 +79,35 @@ const volver = () => navigateTo("/admin");
 
 .status {
     text-align: center;
-    padding: 2rem;
+    padding: 3rem 2rem;
     font-size: 1.1rem;
+    color: #94a3b8;
+    background: rgba(20, 25, 60, 0.55);
+    border-radius: 18px;
+    border: 1px solid rgba(124, 58, 237, 0.15);
 }
 
 .status.error {
     color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
 }
 
+/* Título principal */
+h1 {
+    color: #e2e8f0;
+    font-size: 2.2rem;
+    margin: 0 0 1.5rem 0;
+    background: linear-gradient(90deg, #7c3aed, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/*Tarjeta */
 .galaxia-detalle {
     background: rgba(20, 25, 60, 0.55);
     border: 1px solid rgba(124, 58, 237, 0.25);
     border-radius: 12px;
     padding: 2rem;
-}
-
-.galaxia-detalle h1 {
-    color: #e2e8f0;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
 }
 
 .galaxia-detalle p {
@@ -82,5 +118,11 @@ const volver = () => navigateTo("/admin");
 
 .galaxia-detalle strong {
     color: #a5b9f9;
+}
+
+.container-action-btn{
+    display: flex;
+    margin: 20px;
+    gap: 20px;
 }
 </style>
