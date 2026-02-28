@@ -5,12 +5,13 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 import {FetchError} from 'ofetch'
 const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
+definePageMeta({ middleware: ['auth'] })
 
 const schema = z.object({
   nombre: z.string(),
-  num_planetas: z.string(),
+  num_planetas: z.number(),
   curiosidades: z.string(),
-  tipo: z.number()
+  tipo: z.string()
 
 })
 
@@ -35,6 +36,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     fetch()
     toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'error' })
+    navigateTo('/admin')
 
   } catch (error) {
    
@@ -49,12 +51,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 }
 
-
-watch(loggedIn,()=>{
-  if(!loggedIn.value){
-    navigateTo('http://localhost:3000')
-  }
-})
 </script>
 
 
@@ -66,14 +62,14 @@ watch(loggedIn,()=>{
         </UFormField>
 
         <UFormField label="Número de planetas" name="num_planetas">
-            <UInput v-model="state.num_planetas" type="text"  />
+            <UInput v-model="state.num_planetas" type="number"  />
         </UFormField>
 
          <UFormField label="Curisidades" name="num_planetas">
             <UInput v-model="state.curiosidades" type="text"  />
         </UFormField>
 
-         <UFormField label="Número de planetas" name="num_planetas">
+         <UFormField label="Tipo de -glaxia" name="tipo">
             <UInput v-model="state.tipo" type="text"  />
         </UFormField>
 

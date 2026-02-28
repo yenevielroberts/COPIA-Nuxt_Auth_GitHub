@@ -1,6 +1,9 @@
 <script setup lang="ts">
 // Protege la ruta para usuarios autenticados.
 definePageMeta({ middleware: ['auth'] })
+    const { data: adminData } = useFetch("/api/admin",{
+        lazy: true
+    });
 
 // Modelo base que llega desde la API de galaxias.
 type Galaxia = {
@@ -13,10 +16,9 @@ type Galaxia = {
 
 // Datos de sesión y endpoint protegido de admin.
 const { user, clear } = useUserSession()
-const { data: adminData } = useFetch<{ sensitive?: string }>('/api/admin', { lazy: true })
 
 // Consulta principal para pintar el dashboard.
-const { data: galaxias, pending, error, refresh } = useFetch<Galaxia[]>('/galaxia/get', {
+const { data: galaxias, pending, error, refresh } = useFetch('/galaxia/get', {
     default: () => []
 })
 
@@ -26,16 +28,6 @@ const totalPlanetas = computed(() =>
     (galaxias.value ?? []).reduce((sum, galaxia) => sum + (Number(galaxia.num_planetas) || 0), 0)
 )
 
-// Cuenta tipos únicos de galaxia para mostrar diversidad del catálogo.
-const tiposRegistrados = computed(() => {
-    const tipos = new Set(
-        (galaxias.value ?? [])
-            .map((galaxia) => galaxia.tipo?.trim())
-            .filter((tipo): tipo is string => Boolean(tipo))
-    )
-
-    return tipos.size
-})
 
 // Muestra solo las últimas 5 entradas (de más reciente a más antigua).
 const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse())
@@ -75,10 +67,6 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse(
             <UCard>
                 <p class="stat-label">Planetas estimados</p>
                 <p class="stat-value">{{ totalPlanetas }}</p>
-            </UCard>
-            <UCard>
-                <p class="stat-label">Tipos de galaxia</p>
-                <p class="stat-value">{{ tiposRegistrados }}</p>
             </UCard>
         </section>
 
