@@ -10,10 +10,9 @@ export async function getGalaxias( ){
 
 // Devuelve solo las galaxias asociadas a un usuario concreto.
 export async function getGalaxiasByUserId(userId: number) {
-    const db = useDb()
-
+   
     // Busca las relaciones usuario-galaxia en la tabla auxiliar.
-    const userGalaxias = await db.query.planetas_users.findMany({
+    const userGalaxias = await useDb().query.planetas_users.findMany({
         where: eq(schema.planetas_users.id_user, userId)
     })
 
@@ -28,7 +27,7 @@ export async function getGalaxiasByUserId(userId: number) {
     }
 
     // Recupera únicamente las galaxias vinculadas al usuario.
-    const galaxias = await db.query.galaxias.findMany({
+    const galaxias = await useDb().query.galaxias.findMany({
         where: inArray(schema.galaxias.id, galaxiaIds)
     })
 
@@ -36,10 +35,9 @@ export async function getGalaxiasByUserId(userId: number) {
 }
 
 export async function GalaxiaById(userId:number, galaxiaId:number) {
-    const db = useDb()
     
     //busco la galaxia asociada al id del usuario en la tabla auxiliar
-    const relacion = await db.query.planetas_users.findFirst({
+    const relacion = await useDb().query.planetas_users.findFirst({
         where: and(
             eq(schema.planetas_users.id_user, userId),
             eq(schema.planetas_users.id_galaxias, galaxiaId)
@@ -51,7 +49,7 @@ export async function GalaxiaById(userId:number, galaxiaId:number) {
         return null
     }
 
-    const userGalaxia = await db.query.galaxias.findFirst({
+    const userGalaxia = await useDb().query.galaxias.findFirst({
         where: eq(schema.galaxias.id, relacion.id_galaxias)
     })
 
@@ -62,7 +60,9 @@ export async function GalaxiaById(userId:number, galaxiaId:number) {
 // Inserta una galaxia sin relación de usuario (uso general/legacy).
 export async function insertGalaxias(nombre:string, num_planetas:number, curiosidades:string, tipo:string) {
 
-    const res= await useDb().insert(schema.galaxias).values({
+    const res= await useDb()
+    .insert(schema.galaxias)
+    .values({
         nombre:nombre,
         num_planetas:num_planetas,
         curiosidades:curiosidades,
@@ -85,10 +85,12 @@ export async function insertGalaxiasForUser(
     tipo: string,
     userId: number
 ) {
-    const db = useDb()
+    
 
     // 1) Crea el registro de galaxia.
-    const res = await db.insert(schema.galaxias).values({
+    const res = await useDb()
+    .insert(schema.galaxias)
+    .values({
         nombre,
         num_planetas,
         curiosidades,
@@ -102,7 +104,9 @@ export async function insertGalaxiasForUser(
     }
 
     // 2) Guarda la relación usuario-galaxia en la tabla puente.
-    await db.insert(schema.planetas_users).values({
+    await useDb()
+    .insert(schema.planetas_users)
+    .values({
         id_user: userId,
         id_galaxias: newGalaxia.id
     })
@@ -114,17 +118,44 @@ export async function insertGalaxiasForUser(
 // Elimina una galaxia por su ID y devuelve datos mínimos de confirmación.
 export async function deleteGalaxia(id:number) {
     
-    const res= await useDb().delete(schema.galaxias).
-    where(eq(schema.galaxias.id, id))
-    .returning({deletedId:schema.galaxias.id, nombre:schema.galaxias.nombre});
+    try{
 
-    const deletedGalaxia=res.at(0)
+        //1 primero elimino la relación
+        const resRelacion= await useDb()
+        .delete(schema.planetas_users)
+        .where(eq(schema.planetas_users.id_galaxias, id))
+        .returning({deletedId:schema.planetas_users.id_galaxias});
 
-    if (!deletedGalaxia){
-        throw createError ({statusCode:500, statusMessage:"Error al eliminar la galaxia"})
-    }
+        const deletedRelacion=resRelacion.at(0)
+
+        if (!deletedRelacion){
+            throw createError ({statusCode:500, statusMessage:"Error al eliminar la galaxia"})
+        }
+
+        //2 Elimino la galaxia
+        const res= await useDb()
+        .delete(schema.galaxias)
+        .where(eq(schema.galaxias.id, id))
+        .returning({deletedId:schema.galaxias.id, nombre:schema.galaxias.nombre});
+
+        const deletedGalaxia=res.at(0)
+
+        if (!deletedGalaxia){
+            throw createError ({statusCode:500, statusMessage:"Error al eliminar la galaxia"})
+        }
     
-    return deletedGalaxia
+        return deletedGalaxia 
+    }catch(error:any){
+
+        // Si el error ya es un createError de Nuxt, lo relanzamos
+        if (error.statusCode) throw error;
+        
+        throw createError({ 
+            statusCode: 500, 
+            statusMessage: error.message || "Error al eliminar la galaxia" 
+        });
+    }
+
 }
 
 
@@ -140,5 +171,4 @@ export async function updateGalaxia(galaxia:{nombre:string, num_planetas:number,
     }
     
     return updatedGalaxia
-    
 }

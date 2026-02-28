@@ -35,7 +35,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     })
 
     fetch()
-    toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'error' })
+    toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'success' })
     navigateTo('/admin')
 
   } catch (error) {

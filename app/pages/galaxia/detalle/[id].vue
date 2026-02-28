@@ -1,10 +1,13 @@
 <script setup lang="ts">
 // GET /galaxia/detalle/id
 // Protege la ruta para usuarios autenticados.
+import {FetchError} from 'ofetch'
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
 const id = route.params.id
+const toast = useToast()
+const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
 
 
@@ -25,8 +28,32 @@ const {data:galaxia, pending, error, refresh}=useFetch<Galaxia | null>(`/api/gal
 })
 
 const volver = () => navigateTo("/admin");
-</script>
 
+async function deleteHandler(){
+
+    const confirmacion= confirm("Seguro que quieres eliminar esta galaxia?")
+    if(confirmacion){
+        try {
+            await $fetch(`/api/galaxia/${id}`, {
+            method:'DELETE'
+            })
+
+            fetch()
+            toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'error' })
+            navigateTo('/admin')
+
+        } catch (error) {
+            if(error instanceof FetchError){
+                //Error de fetch
+                toast.add({ title: 'Error', description: error.data.message, color: 'error' })
+                }else{
+                //Error no controlado
+                toast.add({ title: 'error', description: 'Error en la aplicación. Por favor contacte con el equipo técnico', color: 'error' })
+            }
+        }
+    }
+}
+</script>
 
 <template>
     <section class="detalle-container">
@@ -43,7 +70,7 @@ const volver = () => navigateTo("/admin");
             </div> 
             <div class="container-action-btn">
                 <UButton @click="navigateTo(`/galaxia/actualizar/${galaxia.id}`)">Actualizar</UButton>
-                <UButton>Eliminar</UButton>  
+                <UButton @click="deleteHandler">Eliminar</UButton>  
             </div>
         </div>
    
