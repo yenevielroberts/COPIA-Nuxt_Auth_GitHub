@@ -18,7 +18,7 @@ type Galaxia = {
 const { user, clear } = useUserSession()
 
 // Consulta principal para pintar el dashboard.
-const { data: galaxias, pending, error, refresh } = useFetch('/galaxia/get', {
+const { data: galaxias, pending, error, refresh } = useFetch('/api/galaxia/get', {
     default: () => []
 })
 
@@ -92,7 +92,7 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse(
                     </thead>
                     <tbody>
                         <tr v-for="galaxia in ultimasGalaxias" :key="galaxia.id">
-                            <td @click="clear(); navigateTo(`/galaxia/detalle/${galaxia.id}`)">{{ galaxia.nombre || 'Sin nombre' }}</td>
+                            <td @click="navigateTo(`/galaxia/detalle/${galaxia.id}`)">{{ galaxia.nombre || 'Sin nombre' }}</td>
                             <td>{{ galaxia.tipo || 'Sin tipo' }}</td>
                             <td>{{ galaxia.num_planetas ?? 0 }}</td>
                         </tr>

@@ -15,12 +15,12 @@ export default defineEventHandler(async (event)=>{
       const sessionUser = session.user as { id?: number | string, login?: string, email?: string } | undefined
     
       // Log de depuración: fundamental para saber qué está llegando realmente
-      console.log("Datos de sesión recuperados:", sessionUser);
+      console.log("Datos de sesión recuperados:", session);
     
-      let userId = Number(sessionUser?.id)// 2)Obtengo el id del usuario 
+      let userId = null 
     
-      // 3) Si la sesión no trae id, busco el usuario en BD por email o login.
-      if (!userId &&(sessionUser?.login || sessionUser?.email)) {
+      // 3)Busco el usuario en BD por email o login obtenido de la session.
+      if (sessionUser?.login || sessionUser?.email) {
         const userFromDb = await useDb().query.users.findFirst({
           where: sessionUser?.email
             ? eq(schema.users.email, sessionUser.email)

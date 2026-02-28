@@ -6,6 +6,8 @@ definePageMeta({ middleware: ['auth'] })
 const route = useRoute()
 const id = route.params.id
 
+
+
 // Modelo base que llega desde la API de galaxias.
 type Galaxia = {
     id: number
@@ -15,9 +17,11 @@ type Galaxia = {
     tipo: string | null
 }
 
-const {data:galaxia, pending, error, refresh}=useFetch<Galaxia | null>(`/galaxia/${id}`,{
+//Obtengo el detalle de una galaxia especifica
+const {data:galaxia, pending, error, refresh}=useFetch<Galaxia | null>(`/api/galaxia/${id}`,{
+    headers: useRequestHeaders(['cookie']),//Obtenemos las cabeceras de la petición actual (incluyendo la cookie de sesión)
     default: ()=> null,
-    credentials: 'include'  // Envía las cookies de sesión al servidor
+    
 })
 
 const volver = () => navigateTo("/admin");

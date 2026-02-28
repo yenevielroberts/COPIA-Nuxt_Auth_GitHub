@@ -27,9 +27,9 @@ const state = reactive<Partial<Schema>>({
 
 const toast = useToast()
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-
+//Hago el insert
   try {
-    await $fetch('/galaxia/post', {
+    await $fetch('/api/galaxia/post', {
       method:'POST',
       body:event.data
     })
