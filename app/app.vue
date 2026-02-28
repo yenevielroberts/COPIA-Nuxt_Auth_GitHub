@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Inicio from './pages/Inicio.vue';
 
     const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 </script>

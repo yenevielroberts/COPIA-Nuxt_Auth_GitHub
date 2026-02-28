@@ -5,6 +5,7 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 import {FetchError} from 'ofetch'
 const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
+
 const schema = z.object({
   nombre: z.string(),
   num_planetas: z.string(),
@@ -23,6 +24,37 @@ const state = reactive<Partial<Schema>>({
   tipo: undefined
 })
 
+const toast = useToast()
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+
+  try {
+    await $fetch('/galaxia/post', {
+      method:'POST',
+      body:event.data
+    })
+
+    fetch()
+    toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'error' })
+
+  } catch (error) {
+   
+    if(error instanceof FetchError){
+      //Error de fetch
+      toast.add({ title: 'Error', description: error.data.message, color: 'error' })
+    }else{
+      //Error no controlado
+      toast.add({ title: 'error', description: 'Error en la aplicación. Por favor contacte con el equipo técnico', color: 'error' })
+
+    }
+  }
+}
+
+
+watch(loggedIn,()=>{
+  if(!loggedIn.value){
+    navigateTo('http://localhost:3000')
+  }
+})
 </script>
 
 
@@ -51,4 +83,3 @@ const state = reactive<Partial<Schema>>({
         </UButton>
   </UForm>
 </template>
-nombre:string, num_planetas:number, curiosidades:string, tipo:string}, id:number

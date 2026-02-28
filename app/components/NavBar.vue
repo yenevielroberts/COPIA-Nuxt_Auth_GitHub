@@ -17,7 +17,7 @@ const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
     </UCard>
 </template>
 <style >
-.u-card-header {
+/*.u-card-header {
     background: rgba(20, 25, 60, 0.55);
     border-radius: 18px;
     box-shadow: 0 2px 18px rgba(124,58,237,0.18);
@@ -57,5 +57,5 @@ const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 .login-btn:hover {
     background: #a5b9f9;
     color: #070b1a;
-}
+}*/
 </style>
