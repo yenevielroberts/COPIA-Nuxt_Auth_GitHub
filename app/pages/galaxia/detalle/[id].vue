@@ -42,7 +42,7 @@ const volver = () => navigateTo("/admin");
                 <p><strong>Curiosidades:</strong> {{ galaxia.curiosidades || 'Sin información' }}</p>
             </div> 
             <div class="container-action-btn">
-                <UButton>Actualizar</UButton>
+                <UButton @click="navigateTo(`/galaxia/actualizar/${galaxia.id}`)">Actualizar</UButton>
                 <UButton>Eliminar</UButton>  
             </div>
         </div>

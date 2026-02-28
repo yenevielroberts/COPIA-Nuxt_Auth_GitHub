@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm'
 //GET /galaxia/id
 export default defineEventHandler(async (event)=>{
 
-    console.log("Cookie Header:", getHeader(event, 'cookie'))
+    //console.log("Cookie Header:", getHeader(event, 'cookie'))
     
     //1) Obtengo el parametro enviado en la URL
     const id = getRouterParam(event, 'id')
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event)=>{
       const sessionUser = session.user as { id?: number | string, login?: string, email?: string } | undefined
     
       // Log de depuración: fundamental para saber qué está llegando realmente
-      console.log("Datos de sesión recuperados:", session);
+      //console.log("Datos de sesión recuperados:", session);
     
       let userId = null 
     

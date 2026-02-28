@@ -12,7 +12,7 @@ export async function  getUserID(event: H3Event){
 
 
   // Log de depuración: fundamental para saber qué está llegando realmente
-  console.log("Datos de sesión recuperados:", sessionUser);
+  //console.log("Datos de sesión recuperados:", sessionUser);
 
   let userId = Number(sessionUser?.id)// 2)Obtengo el id del usuario 
 

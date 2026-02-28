@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm'
 //GET galaxia/get
 export default defineEventHandler(async(event) =>{
 
-console.log("Cookie Header:", getHeader(event, 'cookie'))
+//console.log("Cookie Header:", getHeader(event, 'cookie'))
 
   //1) Obtengo la sesión y datos del usuario logeado 
   const session = await getUserSession(event)
@@ -15,7 +15,7 @@ console.log("Cookie Header:", getHeader(event, 'cookie'))
 
 
   // Log de depuración: fundamental para saber qué está llegando realmente
-  console.log("Datos de sesión recuperados:", sessionUser);
+  //console.log("Datos de sesión recuperados:", sessionUser);
 
   let userId = Number(sessionUser?.id)// 2)Obtengo el id del usuario 
 
