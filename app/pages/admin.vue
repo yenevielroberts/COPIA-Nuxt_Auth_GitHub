@@ -92,7 +92,7 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse(
                     </thead>
                     <tbody>
                         <tr v-for="galaxia in ultimasGalaxias" :key="galaxia.id">
-                            <td>{{ galaxia.nombre || 'Sin nombre' }}</td>
+                            <td @click="clear(); navigateTo(`/galaxia/detalle/${galaxia.id}`)">{{ galaxia.nombre || 'Sin nombre' }}</td>
                             <td>{{ galaxia.tipo || 'Sin tipo' }}</td>
                             <td>{{ galaxia.num_planetas ?? 0 }}</td>
                         </tr>

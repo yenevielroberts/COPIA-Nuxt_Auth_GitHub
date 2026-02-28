@@ -1,5 +1,5 @@
 
-import { eq, inArray } from 'drizzle-orm';
+import { eq, inArray, and } from 'drizzle-orm';
 import * as schema from '../db/schema'
 
 // Devuelve todas las galaxias (sin filtrar por usuario).
@@ -35,12 +35,24 @@ export async function getGalaxiasByUserId(userId: number) {
     return galaxias
 }
 
-export async function GalaxiaByUserId(userId: number, galaxiaId: number) {
+export async function GalaxiaById(userId:number, galaxiaId:number) {
     const db = useDb()
-    //busco la galaxia asociada al id del usuario
-     const userGalaxia = await db.query.planetas_users.findFirst({
-        where: {
-            id_user:userId, id_galaxias:galaxiaId}
+    
+    //busco la galaxia asociada al id del usuario en la tabla auxiliar
+    const relacion = await db.query.planetas_users.findFirst({
+        where: and(
+            eq(schema.planetas_users.id_user, userId),
+            eq(schema.planetas_users.id_galaxias, galaxiaId)
+        )
+    })
+
+    // Si no existe la relación, devuelve null
+    if (!relacion || !relacion.id_galaxias) {
+        return null
+    }
+
+    const userGalaxia = await db.query.galaxias.findFirst({
+        where: eq(schema.galaxias.id, relacion.id_galaxias)
     })
 
    return userGalaxia

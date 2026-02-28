@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+//Endpoint /galaxia/NewGalaxia
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import {FetchError} from 'ofetch'

@@ -1,27 +1,15 @@
-import { eq } from 'drizzle-orm'
+
+import { getUserID } from '~~/server/utils/getUserId'
 import { getGalaxiasByUserId } from '../../api/galaxias'
-import * as schema from '../../db/schema'
 
+
+//Handle GET para obtener todas las galaxias de un usuario
+//GET galaxia/get
 export default defineEventHandler(async(event) =>{
-  const session = await getUserSession(event)
-  const sessionUser = session.user as { id?: number | string, login?: string, email?: string } | undefined
 
-  let userId = Number(sessionUser?.id)
 
-  if (!userId && (sessionUser?.login || sessionUser?.email)) {
-    const userFromDb = await useDb().query.users.findFirst({
-      where: sessionUser?.email
-        ? eq(schema.users.email, sessionUser.email)
-        : eq(schema.users.login, sessionUser!.login as string)
-    })
-
-    userId = Number(userFromDb?.id)
-  }
-
-  if (!userId) {
-    throw createError({ statusCode: 401, statusMessage: 'Usuario no autenticado' })
-  }
-
+  const userId= await getUserID(event)//Obtengo el id del usuario
+  //5) Obtengo los datos de las galaxias
   const galaxias = await getGalaxiasByUserId(userId)
 
   return galaxias
