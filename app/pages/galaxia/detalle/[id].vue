@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// GET /galaxia/detalle/id
 // Protege la ruta para usuarios autenticados.
 definePageMeta({ middleware: ['auth'] })
 
@@ -15,7 +16,8 @@ type Galaxia = {
 }
 
 const {data:galaxia, pending, error, refresh}=useFetch<Galaxia | null>(`/galaxia/${id}`,{
-    default: ()=> null
+    default: ()=> null,
+    credentials: 'include'  // Envía las cookies de sesión al servidor
 })
 
 const volver = () => navigateTo("/admin");
