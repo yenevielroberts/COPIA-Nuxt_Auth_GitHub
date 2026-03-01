@@ -2,7 +2,6 @@
 // GET /planetas/detalle/id
 // Protege la ruta para usuarios autenticados.
 import {FetchError} from 'ofetch'
-import type { NumericLiteral } from 'typescript'
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
@@ -72,7 +71,7 @@ async function deleteHandler(){
                  <p><strong>Orbitas en días:</strong> {{ planeta.orbita_dias || 'Sin información' }}</p>
             </div> 
             <div class="container-action-btn">
-                <UButton @click="navigateTo(`/galaxia/actualizar/${planeta.id}`)">Actualizar</UButton>
+                <UButton @click="navigateTo(`/planetas/actualizar/${planeta.id}`)">Actualizar</UButton>
                 <UButton @click="deleteHandler">Eliminar</UButton>  
             </div>
         </div>

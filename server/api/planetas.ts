@@ -80,3 +80,18 @@ export async function deletePlaneta(id:number) {
     }
 
 }
+
+
+// Actualiza un planeta por ID y devuelve el registro actualizado.
+export async function updatePlanetas(planeta:{nombre:string, anillos:number, satelites:number, habitabilidad:string, orbita_dias:number}, id:number,){
+
+    const res=await useDb().update(schema.planetas).set({nombre:planeta.nombre,anillos:planeta.anillos,satelites:planeta.satelites,habitabilidad:planeta.habitabilidad,orbita_dias:planeta.orbita_dias }).where(eq(schema.planetas.id, id)).returning();  
+
+    const updatedPlaneta=res.at(0)
+
+       if (!updatedPlaneta){
+        throw createError ({statusCode:500, statusMessage:"Error al actualizar el planeta"})
+    }
+    
+    return updatedPlaneta
+}
