@@ -27,7 +27,7 @@ const {data:galaxia, pending, error, refresh}=useFetch<Galaxia | null>(`/api/gal
     
 })
 
-const volver = () => navigateTo("/admin");
+const volver = () => navigateTo("/galaxia/listado");
 
 async function deleteHandler(){
 

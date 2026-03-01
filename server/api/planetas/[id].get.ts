@@ -6,8 +6,8 @@ import { planetaById } from '../planetas'
 export default defineEventHandler(async(event) =>{
 
   const id_planeta = getRouterParam(event, 'id')
-  const galaxias = await planetaById(Number(id_planeta))
+  const planeta = await planetaById(Number(id_planeta))
 
-  return galaxias
+  return planeta
   
 })

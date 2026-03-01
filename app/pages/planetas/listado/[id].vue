@@ -5,7 +5,7 @@ definePageMeta({ middleware: ['auth'] })
 const route = useRoute()
 const galaxia_id = route.params.id
 
-const volver = () => navigateTo("/admin");
+const volver = () => navigateTo("/galaxia/listado");
 
 // Datos de sesión y endpoint protegido de admin.
 const { user } = useUserSession()

@@ -19,16 +19,17 @@ type Planeta = {
     satelites: number | null
     habitabilidad: string | null
     orbita_dias: number | null
+    galaxia_id:number | null
 }
 
-//Obtengo el detalle de una galaxia especifica
+//Obtengo el detalle de un planeta en especifico
 const {data:planeta, pending, error, refresh}=useFetch<Planeta | null>(`/api/planetas/${id}`,{
     headers: useRequestHeaders(['cookie']),//Obtenemos las cabeceras de la petición actual (incluyendo la cookie de sesión)
     default: ()=> null,
     
 })
 
-const volver = () => navigateTo("/admin");//cambiar ruta
+const volver = () => navigateTo(`/planetas/listado/${planeta.value?.galaxia_id}`);//
 
 async function deleteHandler(){
 
@@ -54,6 +55,7 @@ async function deleteHandler(){
         }
     }
 }
+
 </script>
 
 <template>

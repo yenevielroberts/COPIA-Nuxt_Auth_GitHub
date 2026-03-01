@@ -90,10 +90,13 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 }
 
+
+const volver = () => navigateTo(`/planetas/detalle/${id}`);//
 </script>
 
 
 <template>
+    <button @click="volver" class="btn-back">← Volver a la página de detalle</button>
 
        <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
         <UFormField label="Nombre" name="nombre">
