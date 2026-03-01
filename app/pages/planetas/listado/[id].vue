@@ -59,7 +59,7 @@ const listaPlanetas = computed(() => (planetas.value ?? []))
                     <tbody>
                         <tr v-for="planeta in listaPlanetas" :key="planeta.id">
                             <td>
-                                <UButton @click="navigateTo(``)">
+                                <UButton @click="navigateTo(`/planetas/detalle/${planeta.id}`)">
                                     {{ planeta.nombre }}
                                 </UButton>
                             </td>

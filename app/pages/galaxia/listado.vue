@@ -6,7 +6,7 @@ definePageMeta({ middleware: ['auth'] })
 type Galaxia = {
     id: number
     nombre: string | null
-    num_planetas: number | null
+    num_planetas_count: number | null
     curiosidades: string | null
     tipo: string | null
 }
@@ -70,7 +70,7 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []))
                             <td>{{ galaxia.tipo || 'Sin tipo' }}</td>
                             <td>  
                                 <UButton @click=" navigateTo(`/planetas/listado/${galaxia.id}`)">
-                                    Ver planetas({{ galaxia.num_planetas ?? 0 }})
+                                    Ver planetas({{ galaxia.num_planetas_count ?? 0 }})
                                 </UButton></td>
                         </tr>
                     </tbody>

@@ -38,3 +38,45 @@ export async function insertPlaneta(planeta:{
     
     return newPlaneta
 }
+
+//Obtengo una galaxia en especifico
+export async function planetaById(id_planeta:number) {
+    
+    const planeta = await useDb().query.planetas.findFirst({
+         where:
+            eq(schema.planetas.id, id_planeta)
+    })
+
+   return planeta
+}
+
+// Elimina una galaxia por su ID y devuelve datos mínimos de confirmación.
+export async function deletePlaneta(id:number) {
+    
+    try{
+
+        // Elimino la galaxia
+        const res= await useDb()
+        .delete(schema.planetas)
+        .where(eq(schema.planetas.id, id))
+        .returning({deletedId:schema.planetas.id, nombre:schema.planetas.nombre});
+
+        const deletedPlaneta=res.at(0)
+
+        if (!deletedPlaneta){
+            throw createError ({statusCode:500, statusMessage:"Error al eliminar el planeta"})
+        }
+    
+        return deletedPlaneta 
+    }catch(error:any){
+
+        // Si el error ya es un createError de Nuxt, lo relanzamos
+        if (error.statusCode) throw error;
+        
+        throw createError({ 
+            statusCode: 500, 
+            statusMessage: error.message || "Error al eliminar el planeta" 
+        });
+    }
+
+}

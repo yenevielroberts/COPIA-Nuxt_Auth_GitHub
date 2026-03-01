@@ -28,6 +28,7 @@ export async function getGalaxiasByUserId(userId: number) {
     return resultado
 }
 
+//Obtengo una galaxia en especifico
 export async function GalaxiaById(userId:number, galaxiaId:number) {
     
     const userGalaxia = await useDb().query.galaxias.findFirst({
