@@ -125,7 +125,9 @@ const volver = () => navigateTo(`/planetas/detalle/${id}`);//
             </selectMenu>
         </UFormField>
         <UFormField label="Seleciona una galaxia" name="galaxiaId">
-            <!--Le paso un array de objectos que creen con el map. El Uselect busca la propieda label y los muestra el pantall y para el valor con la propieda value del objecto -->
+            <!--Le paso un array de objectos que creen con el map. El Uselect busca la propieda label y los muestra el pantall y para el valor con la propieda value del objecto 
+            falta poner un default
+            -->
             <USelect v-model="state.galaxiaId" :items="opcionesGalaxias" class="w-48" />
         </UFormField>
 
