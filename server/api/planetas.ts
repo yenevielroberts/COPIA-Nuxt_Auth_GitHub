@@ -51,12 +51,21 @@ export async function insertPlaneta(planeta: {
 //Obtengo una galaxia en especifico
 export async function planetaById(id_planeta: number) {
 
-    const planeta = await useDb().query.planetas.findFirst({
-        where:
-            eq(schema.planetas.id, id_planeta)
+    const planeta = await useDb().select({
+        id: schema.planetas.id,
+        nombre: schema.planetas.nombre,
+        satelites: schema.planetas.satelites,
+        anillos: schema.planetas.anillos,
+        habitabilidad: schema.planetas.habitabilidad,
+        orbita_dias: schema.planetas.orbita_dias,
+        galaxia_id: schema.planetas.galaxia_id,
+        nombre_galaxia: schema.galaxias.nombre
     })
+        .from(schema.planetas)
+        .innerJoin(schema.galaxias, eq(schema.galaxias.id, schema.planetas.galaxia_id))
+        .where(eq(schema.planetas.id, id_planeta))
 
-    return planeta
+    return planeta.at(0)
 }
 
 // Elimina una galaxia por su ID y devuelve datos mínimos de confirmación.
