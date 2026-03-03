@@ -20,6 +20,7 @@ type Planeta = {
     habitabilidad: string | null
     orbita_dias: number | null
     galaxia_id:number | null
+    nombre_galaxia: string | null
 }
 
 //Obtengo el detalle de un planeta en especifico
@@ -29,6 +30,8 @@ const {data:planeta, pending, error, refresh}=useFetch<Planeta | null>(`/api/pla
     
 })
 
+
+console.log(planeta)
 const volver = () => navigateTo(`/planetas/listado/${planeta.value?.galaxia_id}`);//
 
 async function deleteHandler(){
@@ -42,7 +45,7 @@ async function deleteHandler(){
 
             fetch()
             toast.add({ title: 'Success', description: 'The form has been submitted.', color: 'error' })
-            navigateTo('/admin')//cambiar ruta
+            navigateTo(`/planetas/listado/${planeta.value?.galaxia_id}`)//cambiar ruta
 
         } catch (error) {
             if(error instanceof FetchError){
@@ -64,10 +67,10 @@ async function deleteHandler(){
         <p v-else-if="error" class="status error">Error al cargar la galaxia.</p>
         <p v-else-if="!planeta" class="status error">Planeta no encontrada o no tienes acceso a ella.</p>
         <div  v-else>
-            <h1>Planeta {{ planeta.nombre }}</h1>
+            <h1>Planeta {{ planeta.nombre }} de la galaxia {{ planeta.nombre_galaxia }}</h1>
             <button @click="volver" class="btn-back">← Volver al listado</button>
             <div class="galaxia-detalle">
-                <p><strong>Tipo:</strong> {{ planeta.habitabilidad || 'No especificado' }}</p>
+                <p><strong>habitabilidad:</strong> {{ planeta.habitabilidad || 'No especificado' }}</p>
                 <p><strong>Anillos:</strong> {{ planeta.anillos || 0 }}</p>
                 <p><strong>satelites:</strong> {{ planeta.satelites || 'Sin información' }}</p>
                  <p><strong>Orbitas en días:</strong> {{ planeta.orbita_dias || 'Sin información' }}</p>
