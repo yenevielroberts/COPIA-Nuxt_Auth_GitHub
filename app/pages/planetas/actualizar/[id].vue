@@ -99,44 +99,50 @@ const volver = () => navigateTo(`/planetas/detalle/${id}`);//
 
 
 <template>
-    <button @click="volver" class="btn-back">← Volver a la página de detalle</button>
 
-       <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-        <UFormField label="Nombre" name="nombre">
-            <UInput v-model="state.nombre" />
-        </UFormField>
+  <div class=" flex items-center justify-center px-4 ">
+    <div class="w-full max-w-md space-y-4">
+         <h1 class=" text-black text-xl" >Actualizar la galaxia: {{ state.nombre }}</h1>
+        <button @click="volver" class="btn-back">← Volver a la página de detalle</button>
 
-             <UFormField label="Número de anillos" name="anillos">
-            <UInput v-model="state.anillos" type="number"  />
-        </UFormField>
+        <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+          <UFormField label="Nombre" name="nombre">
+              <UInput v-model="state.nombre" />
+          </UFormField>
 
-         <UFormField label="Satelites" name="satelites">
-            <UInput v-model="state.satelites" type="number"  />
-        </UFormField>
+              <UFormField label="Número de anillos" name="anillos">
+              <UInput v-model="state.anillos" type="number"  />
+          </UFormField>
 
-         <UFormField label="Habitabilidad" name="habitabilidad">
-            <UInput v-model="state.habitabilidad" type="text"  />
-        </UFormField>
+          <UFormField label="Satelites" name="satelites">
+              <UInput v-model="state.satelites" type="number"  />
+          </UFormField>
 
-        <UFormField label="Orbita_dias" name="orbita_dias">
-            <UInput v-model="state.orbita_dias" type="number"  />
-        </UFormField>
+          <UFormField label="Habitabilidad" name="habitabilidad">
+              <UInput v-model="state.habitabilidad" type="text"  />
+          </UFormField>
 
-        <UFormField label="Galaxias:" name="galaxias">
-            <selectMenu>
+          <UFormField label="Orbita_dias" name="orbita_dias">
+              <UInput v-model="state.orbita_dias" type="number"  />
+          </UFormField>
 
-            </selectMenu>
-        </UFormField>
-        <UFormField label="Seleciona una galaxia" name="galaxiaId">
-            <!--Le paso un array de objectos que creen con el map. El Uselect busca la propieda label y los muestra el pantall y para el valor con la propieda value del objecto 
-            falta poner un default
-            -->
-            <USelect v-model="state.galaxiaId" :items="opcionesGalaxias" class="w-48" />
-        </UFormField>
+          <UFormField label="Galaxias:" name="galaxias">
+              <selectMenu>
 
-        <!--Login normal-->
-        <UButton type="submit">
-        Submit
-        </UButton>
-  </UForm>
+              </selectMenu>
+          </UFormField>
+          <UFormField label="Seleciona una galaxia" name="galaxiaId">
+              <!--Le paso un array de objectos que creen con el map. El Uselect busca la propieda label y los muestra el pantall y para el valor con la propieda value del objecto 
+              falta poner un default
+              -->
+              <USelect v-model="state.galaxiaId" :items="opcionesGalaxias" class="w-48" />
+          </UFormField>
+
+          <!--Login normal-->
+          <UButton type="submit">
+          Submit
+          </UButton>
+    </UForm>
+    </div>
+  </div>
 </template>

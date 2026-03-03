@@ -54,22 +54,29 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
 
-       <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-        <UFormField label="Nombre" name="nombre">
-            <UInput v-model="state.nombre" />
-        </UFormField>
+<div class=" flex items-center justify-center px-4 ">
 
-         <UFormField label="Curisidades" name="num_planetas">
-            <UInput v-model="state.curiosidades" type="text"  />
-        </UFormField>
+  <div class="w-full max-w-md space-y-4">
+     <h1 class=" text-black text-xl" >Agregar una nueva Galaxia</h1>
+    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+      <UFormField label="Nombre" name="nombre">
+          <UInput v-model="state.nombre" />
+      </UFormField>
 
-         <UFormField label="Tipo de -glaxia" name="tipo">
-            <UInput v-model="state.tipo" type="text"  />
-        </UFormField>
+        <UFormField label="Curisidades" name="num_planetas">
+          <UInput v-model="state.curiosidades" type="text"  />
+      </UFormField>
 
-        <!--Login normal-->
-        <UButton type="submit">
-        Submit
-        </UButton>
+        <UFormField label="Tipo de galaxia" name="tipo">
+          <UInput v-model="state.tipo" type="text"  />
+      </UFormField>
+
+      <!--Login normal-->
+      <UButton type="submit">
+      Submit
+      </UButton>
   </UForm>
+  </div>
+</div>
+
 </template>

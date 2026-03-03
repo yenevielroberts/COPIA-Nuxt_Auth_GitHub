@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
-const showMobileMenu = ref(false);
 
 // Rutas de navegación
 const navLinks = [
@@ -11,7 +10,6 @@ const navLinks = [
 
 function handleLogout() {
     clear();
-    showMobileMenu.value = false;
     navigateTo('/login');
 }
 </script>

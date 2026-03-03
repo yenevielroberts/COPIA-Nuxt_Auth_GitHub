@@ -73,24 +73,29 @@ const volver = () => navigateTo(`/galaxia/detalle/${id}`);//
 
 
 <template>
-
-        <button @click="volver" class="btn-back">← Volver a la página de detalle</button>
-       <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <div class=" flex items-center justify-center px-4 ">
+   
+    <div class="w-full max-w-md space-y-4">
+       <h1 class=" text-black text-xl" >Actualizar la galaxia: {{ state.nombre }}</h1>
+      <button @click="volver" class="btn-back">← Volver a la página de detalle</button>
+      <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
         <UFormField label="Nombre" name="nombre">
-            <UInput v-model="state.nombre" />
+            <UInput v-model="state.nombre" type="text" />
         </UFormField>
 
-         <UFormField label="Curisidades" name="num_planetas">
-            <UInput v-model="state.curiosidades" type="text"  />
+        <UFormField label="Curisidades" name="num_planetas">
+          <UInput v-model="state.curiosidades" type="text" />
         </UFormField>
 
-         <UFormField label="Tipo de -glaxia" name="tipo">
-            <UInput v-model="state.tipo" type="text"  />
+        <UFormField label="Tipo de -glaxia" name="tipo">
+          <UInput v-model="state.tipo" type="text" />
         </UFormField>
 
         <!--Login normal-->
         <UButton type="submit">
-        Submit
+          Submit
         </UButton>
-  </UForm>
+      </UForm>
+    </div>
+  </div>
 </template>

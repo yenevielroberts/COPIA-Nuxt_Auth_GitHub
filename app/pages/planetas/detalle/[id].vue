@@ -66,7 +66,7 @@ async function deleteHandler(){
         <p v-if="pending" class="status">Cargando datos...</p>
         <p v-else-if="error" class="status error">Error al cargar la galaxia.</p>
         <p v-else-if="!planeta" class="status error">Planeta no encontrada o no tienes acceso a ella.</p>
-        <div  v-else>
+        <div v-else class="detalle-content">
             <h1>Planeta {{ planeta.nombre }} de la galaxia {{ planeta.nombre_galaxia }}</h1>
             <button @click="volver" class="btn-back">← Volver al listado</button>
             <div class="galaxia-detalle">
@@ -84,80 +84,132 @@ async function deleteHandler(){
     </section>
 </template>
 <style scoped>
-/* Botón de volver */
-.btn-back {
-    background: rgba(20, 25, 60, 0.55);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    color: #a5b9f9;
-    padding: 0.65rem 1.5rem;
-    border-radius: 30px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 1.5rem;
-    backdrop-filter: blur(12px);
-}
-
-.btn-back:hover {
-    background: rgba(124, 58, 237, 0.25);
-    border-color: #7c3aed;
-    transform: translateX(-4px);
-    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
-}
-
+/* Contenedor */
 .detalle-container {
-    max-width: 800px;
+    max-width: 860px;
     margin: 2rem auto;
     padding: 0 1rem;
 }
 
+.detalle-content {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+/* Botón de volver */
+.btn-back {
+    background: #ffffff;
+    border: 2px solid #7c3aed;
+    color: #6d28d9;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 1.5rem;
+    min-height: 44px;
+}
+
+.btn-back:hover {
+    background: #f5f3ff;
+    transform: translateX(-2px);
+}
+
+.btn-back:focus-visible {
+    outline: 3px solid #7c3aed;
+    outline-offset: 2px;
+}
+
 .status {
     text-align: center;
-    padding: 3rem 2rem;
-    font-size: 1.1rem;
-    color: #94a3b8;
-    background: rgba(20, 25, 60, 0.55);
-    border-radius: 18px;
-    border: 1px solid rgba(124, 58, 237, 0.15);
+    padding: 2rem 1.25rem;
+    font-size: 1rem;
+    color: #334155;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #3b82f6;
 }
 
 .status.error {
-    color: #ef4444;
-    border-color: rgba(239, 68, 68, 0.3);
+    color: #7f1d1d;
+    background: #fee2e2;
+    border-color: #fecaca;
+    border-left-color: #dc2626;
 }
 
 /* Título principal */
 h1 {
-    color: #e2e8f0;
-    font-size: 2.2rem;
+    color: #1e293b;
+    font-size: 2rem;
     margin: 0 0 1.5rem 0;
-    background: linear-gradient(90deg, #7c3aed, #38bdf8);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
 }
 
 /*Tarjeta */
 .galaxia-detalle {
-    background: rgba(20, 25, 60, 0.55);
-    border: 1px solid rgba(124, 58, 237, 0.25);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: 2rem;
+    padding: 1.25rem;
 }
 
 .galaxia-detalle p {
-    color: #94a3b8;
-    margin-bottom: 0.75rem;
+    color: #334155;
+    margin: 0 0 0.75rem;
     line-height: 1.6;
 }
 
+.galaxia-detalle p:last-child {
+    margin-bottom: 0;
+}
+
 .galaxia-detalle strong {
-    color: #a5b9f9;
+    color: #1e293b;
 }
 
 .container-action-btn{
     display: flex;
-    margin: 20px;
-    gap: 20px;
+    margin-top: 1rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.container-action-btn :deep(button) {
+    min-height: 44px;
+}
+
+.container-action-btn :deep(button:focus-visible) {
+    outline: 3px solid #7c3aed;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .detalle-container {
+        margin: 1rem auto;
+    }
+
+    .detalle-content {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .container-action-btn {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
 }
 </style>
