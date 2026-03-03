@@ -115,6 +115,9 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse(
 </template>
 
 <style scoped>
+/* ESTILOS ACCESIBLES - WCAG 2.1 AA */
+/* Contraste mejorado: mínimo 4.5:1 para cumplir con WCAG */
+
 /* Layout general del dashboard */
 .admin-home {
     min-height: calc(100vh - 80px);
@@ -122,63 +125,82 @@ const ultimasGalaxias = computed(() => (galaxias.value ?? []).slice(-5).reverse(
     margin: 0 auto;
     padding: 2rem 1.25rem 3rem;
     display: grid;
-    gap: 1.25rem;
+    gap: 1.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #1e293b;
 }
 
 /* Tarjeta principal (hero) */
 .hero {
-    background: rgba(20, 25, 60, 0.55);
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    border-radius: 18px;
-    padding: 1.25rem;
+    background: #ffffff;
+    border: 2px solid #7c3aed;
+    border-radius: 12px;
+    padding: 1.75rem;
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.1);
 }
 
 .tag {
-    color: #a5b9f9;
-    font-size: 0.85rem;
-    margin-bottom: 0.35rem;
+    color: #6d28d9;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 h1 {
-    color: #e2e8f0;
+    color: #1e293b;
     margin: 0;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 700;
 }
 
 .subtitle {
-    color: #94a3b8;
+    color: #475569;
     margin-top: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 .hero-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.65rem;
+    gap: 0.75rem;
 }
 
 /* Grid responsivo de métricas */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 0.85rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
 }
 
 .stat-label {
-    color: #94a3b8;
+    color: #475569;
     margin: 0;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .stat-value {
-    color: #e2e8f0;
+    color: #1e293b;
     font-weight: 700;
-    font-size: 1.8rem;
-    margin: 0.35rem 0 0;
+    font-size: 2.25rem;
+    margin: 0.5rem 0 0;
+    line-height: 1.2;
 }
 
 /* Bloque de contenido con tabla */
 .content-card {
     overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
 }
 
 .content-header {
@@ -186,49 +208,174 @@ h1 {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    padding: 0;
 }
 
 h2 {
     margin: 0;
-    color: #e2e8f0;
+    color: #1e293b;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
 }
 
 .status {
-    color: #94a3b8;
-    margin: 0.5rem 0;
+    color: #334155;
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    background: #f0f9ff;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-left: 4px solid #3b82f6;
 }
 
 .status.error {
-    color: #fca5a5;
+    color: #7f1d1d;
+    background: #fee2e2;
+    border-left-color: #dc2626;
 }
 
 .table-wrap {
     overflow-x: auto;
+    border-radius: 8px;
 }
 
 /* Tabla de últimas galaxias */
 table {
     width: 100%;
     border-collapse: collapse;
-}
-
-th,
-td {
-    text-align: left;
-    padding: 0.7rem 0.4rem;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-    color: #cbd5e1;
+    font-size: 1rem;
 }
 
 th {
-    color: #a5b9f9;
-    font-weight: 600;
+    color: #ffffff;
+    font-weight: 700;
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 2px solid #7c3aed;
+    background: #7c3aed;
+}
+
+td {
+    color: #334155;
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+tbody tr:hover {
+    background: #f8faff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+tbody tr:focus-within {
+    background: #f0f9ff;
+    outline: 2px solid #3b82f6;
+    outline-offset: -2px;
 }
 
 .session-text {
-    color: #94a3b8;
-    font-size: 0.92rem;
-    margin: 0;
+    color: #475569;
+    font-size: 1rem;
+    margin: 2rem 0 0 0;
+    padding: 1rem;
+    border-top: 1px solid #e2e8f0;
+    line-height: 1.5;
+}
+
+/* Estilos de accesibilidad para botones y elementos interactivos */
+:deep(button),
+:deep(a) {
+    transition: all 0.2s ease-in-out;
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+:deep(button:focus-visible),
+:deep(a:focus-visible) {
+    outline: 3px solid #7c3aed;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+:deep(button:hover),
+:deep(a:hover) {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+:deep(button:active),
+:deep(a:active) {
+    transform: translateY(0);
+}
+
+/* Modo de alto contraste */
+@media (prefers-contrast: more) {
+    .hero {
+        border-width: 3px;
+    }
+
+    table th {
+        border-bottom-width: 3px;
+    }
+
+    h1, h2, .stat-value {
+        font-weight: 800;
+    }
+
+    .tag, .stat-label {
+        font-weight: 800;
+    }
+}
+
+/* Respetar preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Responsive para dispositivos móviles */
+@media (max-width: 640px) {
+    .admin-home {
+        padding: 1.5rem 1rem 2rem;
+        gap: 1.25rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+
+    .content-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .content-header button {
+        width: 100%;
+    }
+
+    table {
+        font-size: 0.875rem;
+    }
+
+    th, td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.75rem;
+    }
 }
 </style>
