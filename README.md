@@ -1,126 +1,128 @@
-# COPIA-Nuxt_Auth_GitHub
+# Aplicación de Gestión de Galaxias y Planetas - Nuxt + Auth GitHub
 
-## Nuxt Minimal Starter
+Una aplicación web construida con **Nuxt** que permite gestionar galaxias y planetas con autenticación mediante GitHub. Incluye un sistema de API backend, base de datos con Drizzle ORM y panel de administración.
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Requisitos Previos
 
-## Setup
+- **Node.js** versión 18 o superior
+- **npm**
 
-Make sure to install dependencies:
+## Instalación de Dependencias
+
+Instala las dependencias del proyecto usando uno de los siguientes comandos:
 
 ```bash
-# npm
 npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+### Dependencias Principales
 
-Start the development server on `http://localhost:3000`:
+- **nuxt**: ^3.x - Marco de trabajo basado en Vue 3
+- **vue**: ^3.x - Framework progresivo para interfaces de usuario
+- **drizzle-orm**: ORM para gestionar la base de datos
+- **@nuxt/ui**: ^3.0.2 - Componentes UI preconstruidos para Nuxt
+- **h3**: Servidor HTTP de alto rendimiento
+
+### Dependencias de Desarrollo
+
+- **drizzle-kit**: Herramientas de migración y gestión de esquemas para Drizzle
+- **typescript**: Soporte para tipado estático
+
+## Ejecución del Proyecto
+
+### Servidor de Desarrollo
+
+Para iniciar el servidor de desarrollo en `http://localhost:3000`:
 
 ```bash
-# npm
 npm run dev
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+### Compilación para Producción
 
-Build the application for production:
+Para compilar la aplicación para producción:
 
 ```bash
-# npm
 npm run build
 
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+## Estructura del Proyecto
+
+```
+
+├── app/                              # Código de la aplicación frontend
+│   ├── app.vue                       # Componente raíz de la aplicación
+│   ├── components/
+│   ├── middleware/                 # Middleware de autenticación
+│   └── pages/                         # Páginas de la aplicación
+│
+├── server/                           # Código del backend/servidor
+│   ├── routes/
+│   │   └── auth/                     # Rutas de autenticación
+│   ├── api/                          # Rutas API
+│   ├── db/                           # Configuración de la base de datos          
+│   └── auth.d.ts                     # Definiciones de tipos para autenticación
+
+```
+
+## Configuración Clave
+
+### Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto (usa `ejemplo.env` como referencia) con las siguientes variables:
+
+```env
+NUXT_SESSION_PASSWORD= obtener del repositiorio de Nuxt  
+# Esta info se obtiene creando una Ouths app en github
+NUXT_OAUTH_GITHUB_CLIENT_ID=
+NUXT_OAUTH_GITHUB_CLIENT_SECRET=
+```
+
+### Base de Datos con Drizzle
+
+#### Crear/Actualizar Esquema
 
 ```bash
-# npm
-npm run preview
+# Generar migraciones
+npx drizzle-kit generate:sqlite
 
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+# Aplicar migraciones a la base de datos
+npx drizzle-kit push
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+#### Interfaz Gráfica de la Base de Datos
+
+Para visualizar y gestionar los datos en la base de datos:
+
+```bash
+npx drizzle-kit studio
+```
+
+## Funcionalidades Principales
+
+- ✅ **Autenticación con GitHub**: Login/Registro seguro mediante OAuth
+- ✅ **Panel de Administración**: Página protegida solo para usuarios autenticados
+- ✅ **Gestión de Galaxias**: CRUD completo (Crear, Leer, Actualizar, Eliminar)
+- ✅ **Gestión de Planetas**: CRUD completo con asociación a galaxias
+- ✅ **API REST**: Endpoints para todas las operaciones
+- ✅ **Middleware de Autenticación**: Protección de rutas privadas
+- ✅ **UI Moderna**: Componentes con Nuxt UI
+
+## Algunas de las rutas Disponibles
+
+| Ruta | Descripción |
+|------|-------------|
+| `/` | Página de inicio |
+| `/login` | Login con GitHub |
+| `/register` | Página de registro |
+| `/admin` | Panel de administración (protegido) |
+| `/galaxia/listado` | Listado de galaxias |
+| `/galaxia/NewGalaxia` | Crear nueva galaxia |
+| `/planetas/listado/:id` | Listado de planetas de una galaxia |
+| `/planetas/NewPlaneta` | Crear nuevo planeta |
 
 
-## Apuntes clase
-Puedo acceder a una página restrigida con el middleware.
-
-- Primero abro la web, voy a network, busco el archivo. 
-
-- Halgo click sobre el archivo y sale este código y copio en la url lo que sale en negrita: 
-
-import { createHotContext as __vite__createHotContext } from "**/_nuxt**/@vite/client";import.meta.hot = __vite__createHotContext("**/pages/admin.vue?macro=true**");const __nuxt_page_meta = { middleware: ["auth"] }
-export default __nuxt_page_meta
-// Vite
-if (import.meta.hot) {
-  import.meta.hot.accept(mod => {
-    Object.assign(__nuxt_page_meta, mod)
-  })
-}
-// webpack
-if (import.meta.webpackHot) {
-  import.meta.webpackHot.accept((err) => {
-    if (err) { window.location = window.location.href }
-  })
-}
-
-![alt text](image.png)
-
-- Compio esto en la barra de navegación: http://localhost:3000/_nuxt/pages/admin.vue?macro=true
-
-- Hago la busqueda y la respuesta es el archivo privado
-
-## Drizzle 
-- Dependecias
-
-- npm install drizzle-orm @libsql/client
-- npm install -D drizzle-kit
-
-
-npx drizzle-kit push creación física 
-npx drizzle-kit studio ->interficie de la base de datos
-
-como actualizar node 
-presentación: 01_vue_creacioProjecte
-
-"@nuxt/ui": "^3.0.2" Libreria para hacer componentes con otros componentes ya creados 
-
-[Nuxt UI documentation](https://ui.nuxt.com/docs/getting-started)
-
-[Nuxt UI components] (https://ui.nuxt.com/)
 
