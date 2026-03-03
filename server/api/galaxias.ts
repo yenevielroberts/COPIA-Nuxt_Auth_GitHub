@@ -31,15 +31,34 @@ export async function getGalaxiasByUserId(userId: number) {
 //Obtengo una galaxia en especifico
 export async function GalaxiaById(userId:number, galaxiaId:number) {
     
-    const userGalaxia = await useDb().query.galaxias.findFirst({
-         where: and(
-            eq(schema.galaxias.id_user, userId),
-            eq(schema.galaxias.id, galaxiaId)
+  const userGalaxia = await useDb()
+        .select({
+            id: schema.galaxias.id,
+            nombre: schema.galaxias.nombre,
+            tipo: schema.galaxias.tipo,
+            curiosidades: schema.galaxias.curiosidades,
+            num_planetas_count: count(schema.planetas.id) 
+        })
+        .from(schema.galaxias)
+        .leftJoin(
+            schema.planetas, 
+            eq(schema.galaxias.id, schema.planetas.galaxia_id)
         )
-    })
+        .where(
+            and(
+                eq(schema.galaxias.id_user, userId),
+                eq(schema.galaxias.id, galaxiaId)
+            )
+        )
+        .groupBy(
+            schema.galaxias.id,
+            schema.galaxias.nombre,
+            schema.galaxias.tipo,
+            schema.galaxias.curiosidades
+        );
 
-
-   return userGalaxia
+    // .at(0) obtener el primer elemento o undefined
+    return userGalaxia.at(0);
 }
 
 

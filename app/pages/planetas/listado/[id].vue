@@ -21,7 +21,7 @@ type Galaxia = {
     curiosidades: string | null
     tipo: string | null
 }
-const {data: galaxia, error: galaxia_error,refresh: galaxia_refresh}= useFetch<Galaxia | null >(`/api/galaxia/getOne/${galaxia_id}`)
+const {data: galaxia, error: galaxia_error,refresh: galaxia_refresh}= useFetch<Galaxia | null >(`/api/galaxia/${galaxia_id}`)
 
 // KPIs del panel.
 const totalplanetas = computed(() => planetas.value?.length ?? 0)
