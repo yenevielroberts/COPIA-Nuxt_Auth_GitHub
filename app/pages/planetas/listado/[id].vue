@@ -13,6 +13,16 @@ const { user } = useUserSession()
 // Consulta principal para pintar el dashboard.
 const { data: planetas, pending, error, refresh } = useFetch(`/api/planetas/galaxia/${galaxia_id}`)
 
+// Modelo base que llega desde la API de galaxias.
+type Galaxia = {
+    id: number
+    nombre: string | null
+    num_planetas_count: number | null
+    curiosidades: string | null
+    tipo: string | null
+}
+const {data: galaxia, error: galaxia_error,refresh: galaxia_refresh}= useFetch<Galaxia | null >(`/api/galaxia/getOne/${galaxia_id}`)
+
 // KPIs del panel.
 const totalplanetas = computed(() => planetas.value?.length ?? 0)
 
@@ -26,7 +36,7 @@ const listaPlanetas = computed(() => (planetas.value ?? []))
     <main class="admin-home">
         <!-- Cabecera con descripción y acciones rápidas -->
         <section class="hero">
-            <h1>Los planetas de la galaxia:</h1>
+            <h1>Los planetas de la galaxia: {{ galaxia?.nombre }}</h1>
             <div class="hero-actions">
                 
                 <UButton as-child>

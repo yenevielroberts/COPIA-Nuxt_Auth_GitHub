@@ -15,7 +15,7 @@ const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 type Galaxia = {
     id: number
     nombre: string | null
-    num_planetas: number | null
+    num_planetas_count: number | null
     curiosidades: string | null
     tipo: string | null
 }
@@ -65,7 +65,7 @@ async function deleteHandler(){
             <button @click="volver" class="btn-back">← Volver al listado</button>
             <div class="galaxia-detalle">
                 <p><strong>Tipo:</strong> {{ galaxia.tipo || 'No especificado' }}</p>
-                <p><strong>Número de planetas:</strong> {{ galaxia.num_planetas || 0 }}</p>
+                <p><strong>Número de planetas:</strong> {{ galaxia.num_planetas_count || 0 }}</p>
                 <p><strong>Curiosidades:</strong> {{ galaxia.curiosidades || 'Sin información' }}</p>
             </div> 
             <div class="container-action-btn">

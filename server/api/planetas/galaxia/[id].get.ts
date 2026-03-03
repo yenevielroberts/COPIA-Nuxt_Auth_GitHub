@@ -1,10 +1,10 @@
 //GET /planetas/galaxia/:id
 import { getPlanetas } from '../../../api/planetas'
 
-export default defineEventHandler(async (eventm)=>{
+export default defineEventHandler(async (event)=>{
 
     //1) Obtengo el id de la galaxia enviando por la url
-    const galaxia_id=getRouterParam(eventm, 'id')
+    const galaxia_id=getRouterParam(event, 'id')
 
     const planetas = await getPlanetas(Number(galaxia_id))
 
