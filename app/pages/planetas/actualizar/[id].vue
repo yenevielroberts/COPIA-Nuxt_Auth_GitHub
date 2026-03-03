@@ -32,6 +32,7 @@ const {data:planeta, pending, error, refresh}=useFetch<any>(`/api/planetas/${id}
 
 //Esquema de validación
 const schema = z.object({
+  id: z.number(),
   nombre: z.string().min(2,"El nombre es obligatorio"),
   anillos: z.number().optional(),
   satelites: z.number().optional(),
@@ -44,6 +45,7 @@ type Schema = z.output<typeof schema>
 
 //Estado inicial
 const state = reactive<Partial<Schema>>({
+  id:undefined,
   nombre: undefined,
   anillos: undefined,
   satelites: undefined,
@@ -55,6 +57,7 @@ const state = reactive<Partial<Schema>>({
 //Relleno el formulario cuando obtengo los detalles actuales
 watch(planeta, (newVal)=>{
     if(newVal){
+        state.id=newVal.id || ''
         state.nombre = newVal.nombre || ''
         state.anillos = newVal.anillos || ''
         state.satelites = newVal.satelites || ''
@@ -75,7 +78,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     fetch()
     toast.add({ title: 'Success', description: 'Planeta actualizada correctamente', color: 'success' })
-    navigateTo(`/planetas/detalle/${id}`)
+    navigateTo(`/planetas/detalle/${state.id}`)
 
   } catch (error) {
    

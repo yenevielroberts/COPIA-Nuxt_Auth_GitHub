@@ -21,7 +21,7 @@ export const planetas=sqliteTable ("planetas",{
   id: integer("id").primaryKey(),
   nombre: text("name"),
   anillos:integer("anillos"),
-  satelites: integer("anillos"),
+  satelites: integer("satelites"),
   habitabilidad: text("habitabilidad"),
   orbita_dias: integer("orbita_dias"),
   galaxia_id: integer("galaxia_id").references(()=>galaxias.id),
