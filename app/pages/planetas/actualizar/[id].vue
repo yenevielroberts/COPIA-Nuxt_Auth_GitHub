@@ -3,6 +3,7 @@
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import {FetchError} from 'ofetch'
+import type { Planeta,Galaxia } from '~~/types'
 const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
 definePageMeta({ middleware: ['auth'] })
@@ -12,7 +13,7 @@ const id = route.params.id
 const toast = useToast()
 
 // Consulta principal para pintar el dashboard.
-const { data: galaxias } = useFetch('/api/galaxia/get', {
+const { data: galaxias } = useFetch<Galaxia[]>('/api/galaxia/get', {
     default: () => []
 })
 
@@ -25,7 +26,7 @@ const opcionesGalaxias = computed(() => {
   }))
 })
 //Obtengo los datos actuales de una galaxia especifica
-const {data:planeta, pending, error, refresh}=useFetch<any>(`/api/planetas/${id}`,{
+const {data:planeta, pending, error, refresh}=useFetch<Planeta>(`/api/planetas/${id}`,{
     headers: useRequestHeaders(['cookie']),//Obtenemos las cabeceras de la petición actual (incluyendo la cookie de sesión)    
 })
 
@@ -38,7 +39,7 @@ const schema = z.object({
   satelites: z.number().optional(),
   habitabilidad: z.string(),
   orbita_dias: z.number(),
-  galaxiaId: z.number({ required_error: "Debes seleccionar una galaxia" })
+  galaxia_id: z.number({ required_error: "Debes seleccionar una galaxia" })
 })
 
 type Schema = z.output<typeof schema>
@@ -51,19 +52,19 @@ const state = reactive<Partial<Schema>>({
   satelites: undefined,
   habitabilidad: undefined,
   orbita_dias: undefined,
-  galaxiaId:undefined
+  galaxia_id:undefined
 })
 
 //Relleno el formulario cuando obtengo los detalles actuales
 watch(planeta, (newVal)=>{
     if(newVal){
-        state.id=newVal.id || ''
+        state.id=newVal.id 
         state.nombre = newVal.nombre || ''
-        state.anillos = newVal.anillos || ''
-        state.satelites = newVal.satelites || ''
+        state.anillos = newVal.anillos ?? undefined
+        state.satelites = newVal.satelites ?? undefined
         state.habitabilidad = newVal.habitabilidad || ''
-        state.orbita_dias = newVal.orbita_dias || ''
-        state.galaxiaId = newVal.galaxiaId || '' 
+        state.orbita_dias = newVal.orbita_dias ?? undefined
+        state.galaxia_id = newVal.galaxia_id ?? undefined
     }
 },{immediate:true})
 
@@ -135,7 +136,7 @@ const volver = () => navigateTo(`/planetas/detalle/${id}`);//
               <!--Le paso un array de objectos que creen con el map. El Uselect busca la propieda label y los muestra el pantall y para el valor con la propieda value del objecto 
               falta poner un default
               -->
-              <USelect v-model="state.galaxiaId" :items="opcionesGalaxias" class="w-48" />
+              <USelect v-model="state.galaxia_id" :items="opcionesGalaxias" class="w-48" />
           </UFormField>
 
           <!--Login normal-->

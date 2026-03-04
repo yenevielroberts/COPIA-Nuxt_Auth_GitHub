@@ -1,7 +1,10 @@
 <script setup lang="ts">
 // GET /planetas/listado/id (id de la galaxia)
+
+import type { Planeta } from '~~/types'
 // Protege la ruta para usuarios autenticados.
 definePageMeta({ middleware: ['auth'] })
+
 const route = useRoute()
 const galaxia_id = route.params.id
 
@@ -11,7 +14,7 @@ const volver = () => navigateTo("/galaxia/listado");
 const { user } = useUserSession()
 
 // Consulta principal para pintar el dashboard.
-const { data: planetas, pending, error, refresh } = useFetch(`/api/planetas/galaxia/${galaxia_id}`)
+const { data: planetas, pending, error, refresh } = useFetch<Planeta[]>(`/api/planetas/galaxia/${galaxia_id}`)
 
 // Modelo base que llega desde la API de galaxias.
 type Galaxia = {

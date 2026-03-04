@@ -1,21 +1,15 @@
 <script setup lang="ts">
+import type { Galaxia } from '~~/types'
 // Protege la ruta para usuarios autenticados.
 definePageMeta({ middleware: ['auth'] })
 
-// Modelo base que llega desde la API de galaxias.
-type Galaxia = {
-    id: number
-    nombre: string | null
-    num_planetas_count: number | null
-    curiosidades: string | null
-    tipo: string | null
-}
+
 
 // Datos de sesión y endpoint protegido de admin.
 const { user } = useUserSession()
 
 // Consulta principal para pintar el dashboard.
-const { data: galaxias, pending, error, refresh } = useFetch('/api/galaxia/get', {
+const { data: galaxias, pending, error, refresh } = useFetch<Galaxia[]>('/api/galaxia/get', {
     default: () => []
 })
 

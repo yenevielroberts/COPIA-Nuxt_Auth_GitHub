@@ -4,13 +4,14 @@ import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import {FetchError} from 'ofetch'
 import { selectMenu } from '#build/ui';
+import type { Galaxia } from '~~/types'
 const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
 const volver = () => navigateTo("/admin");
 definePageMeta({ middleware: ['auth'] })
 
 // Consulta principal para pintar el dashboard.
-const { data: galaxias, pending, error, refresh } = useFetch('/api/galaxia/get', {
+const { data: galaxias, pending, error, refresh } = useFetch<Galaxia[]>('/api/galaxia/get', {
     default: () => []
 })
 

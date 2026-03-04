@@ -2,6 +2,7 @@
 // GET /planetas/detalle/id
 // Protege la ruta para usuarios autenticados.
 import {FetchError} from 'ofetch'
+import type { Planeta } from '~~/types'
 definePageMeta({ middleware: ['auth'] })
 
 const route = useRoute()
@@ -11,17 +12,8 @@ const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
 
 
-// Modelo base que llega desde la API de galaxias.
-type Planeta = {
-    id: number
-    nombre: string | null
-    anillos: number | null
-    satelites: number | null
-    habitabilidad: string | null
-    orbita_dias: number | null
-    galaxia_id:number | null
-    nombre_galaxia: string | null
-}
+
+
 
 //Obtengo el detalle de un planeta en especifico
 const {data:planeta, pending, error, refresh}=useFetch<Planeta | null>(`/api/planetas/${id}`,{

@@ -51,8 +51,8 @@ watch(loggedIn,()=>{
 </script>
 
 <template>
- <Ucard class="max-w-md m-auto my-10"> 
-    <template>
+ <UCard class="max-w-md m-auto my-10"> 
+    <template #header>
         <h1 class="text-2xl text-center"> Registro</h1>
     </template>
      <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
@@ -76,6 +76,6 @@ watch(loggedIn,()=>{
     <UButton type="submit" class="mt-4" @click="openInPopup('/auth/github')">
         Log in with Github
     </UButton>
-</Ucard>
+</UCard>
 </template>
 

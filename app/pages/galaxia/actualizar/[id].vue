@@ -3,6 +3,7 @@
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import {FetchError} from 'ofetch'
+import type { Galaxia } from '~~/types'
 const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
 definePageMeta({ middleware: ['auth'] })
@@ -12,7 +13,7 @@ const id = route.params.id
 const toast = useToast()
 
 //Obtengo los datos actuales de una galaxia especifica
-const {data:galaxia, pending, error, refresh}=useFetch<any>(`/api/galaxia/${id}`,{
+const {data:galaxia, pending, error, refresh}=useFetch<Galaxia>(`/api/galaxia/${id}`,{
     headers: useRequestHeaders(['cookie']),//Obtenemos las cabeceras de la petición actual (incluyendo la cookie de sesión)    
 })
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // GET /galaxia/detalle/id
+import type { Galaxia } from '~~/types'
 // Protege la ruta para usuarios autenticados.
 import {FetchError} from 'ofetch'
 definePageMeta({ middleware: ['auth'] })
@@ -11,14 +12,6 @@ const { loggedIn, user, session, fetch, clear, openInPopup } = useUserSession();
 
 
 
-// Modelo base que llega desde la API de galaxias.
-type Galaxia = {
-    id: number
-    nombre: string | null
-    num_planetas_count: number | null
-    curiosidades: string | null
-    tipo: string | null
-}
 
 //Obtengo el detalle de una galaxia especifica
 const {data:galaxia, pending, error, refresh}=useFetch<Galaxia | null>(`/api/galaxia/${id}`,{
