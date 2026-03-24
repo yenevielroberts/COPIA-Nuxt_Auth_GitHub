@@ -15,7 +15,7 @@ nitro: {
         'Access-Control-Allow-Origin': 'http://localhost:9000',
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Methods': '*',
-        'Access-Control-Allow-Headers': '*'
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept'
       }
     }
   }
